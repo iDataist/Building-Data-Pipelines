@@ -25,8 +25,8 @@ time_table_create = "CREATE TABLE IF NOT EXISTS time (start_time time, hour int,
 # INSERT RECORDS
 
 # Insert data using the COPY command to bulk insert log files instead of using INSERT on one row at a time
-songplay_table_insert = "INSERT INTO songplays (songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) \
-                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) \
+songplay_table_insert = "INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) \
+                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s) \
                  ON CONFLICT (songplay_id) DO NOTHING"
 
 user_table_insert = "INSERT INTO users (user_id, first_name, last_name, gender, level) \
