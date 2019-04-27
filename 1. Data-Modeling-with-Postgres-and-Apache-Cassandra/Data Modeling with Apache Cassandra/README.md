@@ -1,38 +1,24 @@
 # Data Modeling with Apache Cassandra
 
-## The Purpose of Creating the sparkifydb Database
-
-Sparkify, a startup company with a music streaming app, would like to analyze the data they've been collecting on songs and user activity on their new music streaming app. The analytics team is particularly interested in understanding what songs users are listening to. Currently, they don't have an easy way to query their data, which resides in a directory of JSON logs on user activity on the app, as well as a directory with JSON metadata on the songs in their app. They want to create a Postgres database with tables designed to optimize queries on song play analysis.
-
-## Schema for Song Play Analysis
-
-### **Fact Table**
-**1. songplays** - records in log data associated with song plays i.e. records with page NextSong
- - songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent
-
-### **Dimension Tables**
-**2. users** - users in the app
- - *user_id, first_name, last_name, gender, level*
-
-**3. songs** - songs in music database
- - *song_id, title, artist_id, year, duration*
-
-**4. artists** - artists in music database
- - *artist_id, name, location, lattitude, longitude*
-
-**5. time** - timestamps of records in songplays broken down into specific units
- - *start_time, hour, day, week, month, year, weekday*
+## The Purpose of Creating the Apache Cassandra Database
+Sparkify, a startup company with a music streaming app, would like to analyze the data they've been collecting on songs and user activity on their new music streaming app. The analytics team is particularly interested in understanding what songs users are listening to. Currently, there is no easy way to query the data to generate the results, since the data reside in a directory of CSV files on user activity on the app. They want to create an Apache Cassandra database which can create queries on song play data to answer the questions.
 
 ## ETL Pipeline
 
-1. [test.ipynb](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/test.ipynb) displays the first few rows of each table to check the database.
+1. [event_data]() contains the CSV files of user activity on the app
 
-2. [create_tables.py](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/create_tables.py) drops and creates the tables, which needs to be run before the ETL scripts to reset the tables.
+2. [etl.ipynb](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/etl.ipynb)
 
-3. [etl.ipynb](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/etl.ipynb) reads and processes a single file from song_data and log_data and loads the data into the tables.
+  - Displays the first few rows of the CSV file in event_data to check the data
 
-4. [etl.py](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/etl.py) reads and processes files from song_data and log_data and loads them into the tables.
+  - Reads and processes the CSV files from event_data, and loads them into a denormalized dataset
 
-5. [sql_queries.py](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/sql_queries.py) contains all the sql queries, and is imported into the last three files above.
+  - Writes the dataset into event_datafile_new.csv
 
-6. [README.md](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/README.md) provides documentation on the project.
+  - Creates and drops the tables in Apache Cassandra
+
+  - Loads the data from event_datafile_new.csv into tables and run queries
+
+3. [event_datafile_new.csv]() contains the denormalized dataset processed from all the CSV files in the event_data
+
+4. [README.md]() provides documentation on the project
