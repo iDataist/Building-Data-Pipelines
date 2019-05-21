@@ -46,56 +46,54 @@ json'auto';
 
 # FINAL TABLES
 
-songplay_table_insert = "INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
-SELECT
-DATEADD(MILLISECOND,ts,'1970-1-1')[time] AS start_time,
-userId AS user_id,
-level,
-song_id,
-artist_id,
-sessionId AS session_id,
-location,
-userAgent AS user_agent
-FROM staging_songs s
-JOIN staging_events e on s.title = e.song"
+songplay_table_insert = "INSERT INTO songplays  \
+(start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) \
+SELECT  \
+CONVERT(TIMESTAMP, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'MI:SS.MS')) AS start_time,  \
+userId AS user_id,  \
+level,  \
+song_id,  \
+artist_id,  \
+sessionId AS session_id,  \
+location,  \
+userAgent AS user_agent \
+FROM staging_songs s \
+JOIN staging_events e on s.title = e.song \
+WHERE page = 'NextSong';"
 
-user_table_insert = "INSERT INTO users (user_id, first_name, last_name, gender, level)
-SELECT
-userId AS user_id,
-firstName AS first_name,
-lastName AS last_name,
-gender,
-level
-FROM staging_events"
+user_table_insert = "INSERT INTO users (user_id, first_name, last_name, gender, level) \
+SELECT userId AS user_id,  \
+firstName AS first_name,  \
+lastName AS last_name,  \
+gender,  \
+level \
+FROM staging_events;"
 
-song_table_insert = "INSERT INTO songs (song_id, title, artist_id, year, duration)
-SELECT
-song_id,
-title,
-artist_id,
-year,
-duration
-FROM staging_songs"
+song_table_insert = "INSERT INTO songs (song_id, title, artist_id, year, duration) \
+SELECT song_id,  \
+title,  \
+artist_id,  \
+year,  \
+duration \
+FROM staging_songs;"
 
-artist_table_insert = "INSERT INTO artists (artist_id, name, location, lattitude, longitude)
-SELECT
-artist_id,
-artist_name AS name,
-artist_location AS location,
-artist_latitude AS lattitude,
-artist_longitude AS longitude
-FROM staging_songs"
+artist_table_insert = "INSERT INTO artists (artist_id, name, location, lattitude, longitude) \
+SELECT artist_id,  \
+artist_name AS name,  \
+artist_location AS location,  \
+artist_latitude AS lattitude,  \
+artist_longitude AS longitude \
+FROM staging_songs;"
 
-time_table_insert = "INSERT INTO time (start_time, hour, day, week, month, year, weekday)
-SELECT
-AS start_time,
-AS hour,
-AS day,
-AS week,
-AS month,
-AS year,
-AS weekday
-AS FROM staging_events"
+time_table_insert = "INSERT INTO time (start_time, hour, day, week, month, year, weekday) \
+SELECT CONVERT(TIMESTAMP, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'MI:SS.MS')) AS start_time, \
+CONVERT(INT, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'HH24')) AS hour, \
+CONVERT(INT, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'DD')) AS day, \
+CONVERT(INT, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'IW')) AS week, \
+CONVERT(INT, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'MM')) AS month, \
+CONVERT(INT, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'YYYY')) AS year, \
+CONVERT(INT, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'FMDay')) AS weekday \
+FROM staging_events;"
 
 # QUERY LISTS
 
