@@ -28,9 +28,9 @@ length NUMERIC,level VARCHAR,
 location VARCHAR,
 method VARCHAR,
 page VARCHAR,
-registration INT,
+registration NUMERIC,
 sessionId INT,
-title VARCHAR,
+song VARCHAR,
 status INT,
 ts BIGINT,
 user_agent VARCHAR,
@@ -115,8 +115,8 @@ artist_id,  \
 sessionId AS session_id,  \
 location,  \
 userAgent AS user_agent \
-FROM staging_songs s \
-JOIN staging_events e on s.title = e.song \
+FROM staging_songs \
+JOIN staging_events ON staging_songs.title = staging_events.song \
 WHERE page = 'NextSong';"
 
 user_table_insert = "INSERT INTO users (user_id, first_name, last_name, gender, level) \
