@@ -17,77 +17,77 @@ time_table_drop = "DROP TABLE IF EXISTS time"
 
 # CREATE TABLES
 
-staging_events_table_create= ("""CREATE TABLE IF NOT EXISTS staging_events
-(name VARCHAR,
-auth VARCHAR,
-first_name VARCHAR,
-gender VARCHAR,
-itemInSession INT,
-last_name VARCHAR,
-length NUMERIC,level VARCHAR,
-location VARCHAR,
-method VARCHAR,
-page VARCHAR,
-registration NUMERIC,
-sessionId INT,
-song VARCHAR,
-status INT,
-ts BIGINT,
-user_agent VARCHAR,
-user_id INT);""")
+staging_events_table_create= ("""CREATE TABLE IF NOT EXISTS staging_events 
+(artist VARCHAR,	
+auth VARCHAR, 
+firstName VARCHAR, 
+gender VARCHAR, 
+itemInSession INT, 
+lastName VARCHAR, 
+length NUMERIC,level VARCHAR, 
+location VARCHAR,	
+method VARCHAR,	
+page VARCHAR, 
+registration NUMERIC, 
+sessionId INT, 
+song VARCHAR, 
+status INT, 
+ts BIGINT, 
+userAgent VARCHAR, 
+userId INT);""")
 
-staging_songs_table_create = ("""CREATE TABLE IF NOT EXISTS staging_songs
-(artist_id VARCHAR,
-lattitude NUMERIC,
-location VARCHAR,
-longitude NUMERIC,
-name VARCHAR,
-duration NUMERIC,
-num_songs INT,
-song_id VARCHAR,
-title VARCHAR,
+staging_songs_table_create = ("""CREATE TABLE IF NOT EXISTS staging_songs 
+(artist_id VARCHAR, 
+artist_latitude NUMERIC, 
+artist_location VARCHAR,
+artist_longitude NUMERIC, 
+artist_name VARCHAR, 
+duration NUMERIC, 
+num_songs INT, 
+song_id VARCHAR, 
+title VARCHAR, 
 year INT);""")
 
-songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplays
-(songplay_id INT IDENTITY(0,1)
-PRIMARY KEY,
-start_time TIMESTAMP,
-user_id INT,
-level VARCHAR,
-song_id VARCHAR,
-artist_id VARCHAR,
-session_id INT,
-location VARCHAR,
+songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplays 
+(songplay_id INT IDENTITY(0,1) 
+PRIMARY KEY, 
+start_time TIMESTAMP, 
+user_id INT, 
+level VARCHAR, 
+song_id VARCHAR, 
+artist_id VARCHAR, 
+session_id INT, 
+location VARCHAR, 
 user_agent VARCHAR);""")
 
-user_table_create = ("""CREATE TABLE IF NOT EXISTS users
-(user_id INT PRIMARY KEY,
-first_name VARCHAR,
-last_name VARCHAR,
-gender VARCHAR,
+user_table_create = ("""CREATE TABLE IF NOT EXISTS users 
+(user_id INT PRIMARY KEY, 
+first_name VARCHAR, 
+last_name VARCHAR, 
+gender VARCHAR, 
 level VARCHAR);""")
 
-song_table_create = ("""CREATE TABLE IF NOT EXISTS songs
-(song_id VARCHAR PRIMARY KEY,
-title VARCHAR,
-artist_id VARCHAR,
-year INT,
+song_table_create = ("""CREATE TABLE IF NOT EXISTS songs 
+(song_id VARCHAR PRIMARY KEY, 
+title VARCHAR, 
+artist_id VARCHAR, 
+year INT, 
 duration NUMERIC);""")
 
-artist_table_create = ("""CREATE TABLE IF NOT EXISTS artists
-(artist_id VARCHAR PRIMARY KEY,
-name VARCHAR,
-location VARCHAR,
-lattitude NUMERIC,
+artist_table_create = ("""CREATE TABLE IF NOT EXISTS artists 
+(artist_id VARCHAR PRIMARY KEY, 
+name VARCHAR, 
+location VARCHAR, 
+lattitude NUMERIC, 
 longitude NUMERIC);""")
 
-time_table_create = ("""CREATE TABLE IF NOT EXISTS time
-(start_time TIMESTAMP,
-hour INT,
-day INT,
-week INT,
-month INT,
-year INT,
+time_table_create = ("""CREATE TABLE IF NOT EXISTS time 
+(start_time TIMESTAMP, 
+hour INT, 
+day INT, 
+week INT, 
+month INT, 
+year INT, 
 weekday VARCHAR);""")
 
 staging_events_copy = ("""
@@ -106,17 +106,19 @@ json'auto';
 
 songplay_table_insert = "INSERT INTO songplays  \
 (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) \
-SELECT  \
-CONVERT(TIMESTAMP, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'MI:SS.MS')) AS start_time,  \
-userId AS user_id,  \
-level,  \
-song_id,  \
-artist_id,  \
-sessionId AS session_id,  \
-location,  \
-userAgent AS user_agent \
-FROM staging_songs \
-JOIN staging_events ON staging_songs.title = staging_events.song \
+SELECT TIMESTAMP 'epoch' + e.ts/1000 * interval '1 second' AS start_time,  \
+e.userId AS user_id,  \
+e.level,  \
+s.song_id,  \
+s.artist_id,  \
+e.sessionId AS session_id,  \
+s.artist_location AS location,  \
+e.userAgent AS user_agent \
+FROM staging_songs s \
+LEFT JOIN staging_events e \
+ON s.title = e.song \
+AND s.artist_name = e.artist \
+AND s.duration = e.length \
 WHERE page = 'NextSong';"
 
 user_table_insert = "INSERT INTO users (user_id, first_name, last_name, gender, level) \
@@ -126,7 +128,7 @@ lastName AS last_name,  \
 gender,  \
 level \
 FROM staging_events;"
-
+    
 song_table_insert = "INSERT INTO songs (song_id, title, artist_id, year, duration) \
 SELECT song_id,  \
 title,  \
@@ -134,7 +136,7 @@ artist_id,  \
 year,  \
 duration \
 FROM staging_songs;"
-
+    
 artist_table_insert = "INSERT INTO artists (artist_id, name, location, lattitude, longitude) \
 SELECT artist_id,  \
 artist_name AS name,  \
@@ -144,14 +146,14 @@ artist_longitude AS longitude \
 FROM staging_songs;"
 
 time_table_insert = "INSERT INTO time (start_time, hour, day, week, month, year, weekday) \
-SELECT CONVERT(TIMESTAMP, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'MI:SS.MS')) AS start_time, \
-CONVERT(INT, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'HH24')) AS hour, \
-CONVERT(INT, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'DD')) AS day, \
-CONVERT(INT, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'IW')) AS week, \
-CONVERT(INT, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'MM')) AS month, \
-CONVERT(INT, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'YYYY')) AS year, \
-CONVERT(INT, TO_CHAR(TO_TIMESTAMP(ts ::double precision / 1000), 'FMDay')) AS weekday \
-FROM staging_events;"
+SELECT DISTINCT start_time, \
+EXTRACT (hour from start_time) AS hour, \
+EXTRACT (day from start_time)AS day, \
+EXTRACT (week from start_time) AS week, \
+EXTRACT (month from start_time) AS month, \
+EXTRACT (year from start_time) AS year, \
+EXTRACT (dayofweek from start_time) AS weekday \
+FROM songplays;"
 
 # QUERY LISTS
 
