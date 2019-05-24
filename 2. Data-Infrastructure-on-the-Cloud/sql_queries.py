@@ -115,7 +115,7 @@ e.sessionId AS session_id,  \
 s.artist_location AS location,  \
 e.userAgent AS user_agent \
 FROM staging_songs s \
-LEFT JOIN staging_events e \
+RIGHT JOIN staging_events e \
 ON s.title = e.song \
 AND s.artist_name = e.artist \
 AND s.duration = e.length \
