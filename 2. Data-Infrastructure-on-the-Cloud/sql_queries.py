@@ -104,7 +104,7 @@ json'auto';
 
 # FINAL TABLES
 
-songplay_table_insert = "INSERT INTO songplays  \
+songplay_table_insert = ("""INSERT INTO songplays  \
 (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) \
 SELECT TIMESTAMP 'epoch' + e.ts/1000 * interval '1 second' AS start_time,  \
 e.userId AS user_id,  \
@@ -119,33 +119,34 @@ RIGHT JOIN staging_events e \
 ON s.title = e.song \
 AND s.artist_name = e.artist \
 AND s.duration = e.length \
-WHERE page = 'NextSong';"
+WHERE page = 'NextSong';""")
 
-user_table_insert = "INSERT INTO users (user_id, first_name, last_name, gender, level) \
-SELECT userId AS user_id,  \
+user_table_insert = ("""INSERT INTO users (user_id, first_name, last_name, gender, level) \
+SELECT DISTINCT userId AS user_id,  \
 firstName AS first_name,  \
 lastName AS last_name,  \
 gender,  \
 level \
-FROM staging_events;"
+FROM staging_events
+WHERE page = 'NextSong';""")
     
-song_table_insert = "INSERT INTO songs (song_id, title, artist_id, year, duration) \
-SELECT song_id,  \
+song_table_insert = ("""INSERT INTO songs (song_id, title, artist_id, year, duration) \
+SELECT DISTINCT song_id,  \
 title,  \
 artist_id,  \
 year,  \
 duration \
-FROM staging_songs;"
+FROM staging_songs;""")
     
-artist_table_insert = "INSERT INTO artists (artist_id, name, location, lattitude, longitude) \
-SELECT artist_id,  \
+artist_table_insert = ("""INSERT INTO artists (artist_id, name, location, lattitude, longitude) \
+SELECT DISTINCT artist_id,  \
 artist_name AS name,  \
 artist_location AS location,  \
 artist_latitude AS lattitude,  \
 artist_longitude AS longitude \
-FROM staging_songs;"
+FROM staging_songs;""")
 
-time_table_insert = "INSERT INTO time (start_time, hour, day, week, month, year, weekday) \
+time_table_insert = ("""INSERT INTO time (start_time, hour, day, week, month, year, weekday) \
 SELECT DISTINCT start_time, \
 EXTRACT (hour from start_time) AS hour, \
 EXTRACT (day from start_time)AS day, \
@@ -153,7 +154,7 @@ EXTRACT (week from start_time) AS week, \
 EXTRACT (month from start_time) AS month, \
 EXTRACT (year from start_time) AS year, \
 EXTRACT (dayofweek from start_time) AS weekday \
-FROM songplays;"
+FROM songplays;""")
 
 # QUERY LISTS
 
