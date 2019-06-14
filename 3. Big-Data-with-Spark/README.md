@@ -1,6 +1,6 @@
 # Big Data with Spark
 
-## The Purpose of Creating the Database and ETL Pipeline on AWS
+## The Purpose of Building an ETL Pipeline for the Data Lake Hosted on S3
 
 Sparkify, a startup company with a music streaming app, has grown their user base and song database even more and want to move their data warehouse to a data lake. Their data resides in S3, in a directory of JSON logs on user activity on the app, as well as a directory with JSON metadata on the songs in their app. Sparkify would like to build aan ETL pipeline that extracts their data from S3, processes them using Spark, and loads the data back into S3 as a set of dimensional tables. This will allow their analytics team to continue finding insights in what songs their users are listening to.
 
