@@ -9,8 +9,8 @@ from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, dat
 config = configparser.ConfigParser()
 config.read('dl.cfg')
 
-os.environ['AWS_ACCESS_KEY_ID']=config['AWS_ACCESS_KEY_ID']
-os.environ['AWS_SECRET_ACCESS_KEY']=config['AWS_SECRET_ACCESS_KEY']
+os.environ['AWS_ACCESS_KEY_ID']=config.get('KEY', 'AWS_ACCESS_KEY_ID')
+os.environ['AWS_SECRET_ACCESS_KEY']=config.get('KEY', 'AWS_SECRET_ACCESS_KEY')
 
 
 def create_spark_session():
@@ -23,10 +23,10 @@ def create_spark_session():
 
 def process_song_data(spark, input_data, output_data):
     # get filepath to song data file
-    song_data = input_data + 'song_data'
+    song_data = os.path.join(input_data, "song_data/*/*/*/*.json")
     
     # read song data file
-    df = spark.read.json(song_data/*.json)
+    df = spark.read.json(song_data)
 
     # extract columns to create songs table
     songs_table = df.select('song_id', 'title', 'artist_id', 'year', 'duration')
@@ -43,10 +43,10 @@ def process_song_data(spark, input_data, output_data):
 
 def process_log_data(spark, input_data, output_data):
     # get filepath to log data file
-    log_data = input_data + 'log_data'
+    log_data = os.path.join(input_data, "log_data/*/*/*.json")
 
     # read log data file
-    df = spark.read.json(log_data/*json)
+    df = spark.read.json(log_data)
     
     # filter by actions for song plays
     df = df.filter(df.page == 'NextSong')
@@ -58,11 +58,11 @@ def process_log_data(spark, input_data, output_data):
     users_table.write.parquet(os.path.join(output_data, 'users'), 'overwrite')
 
     # create timestamp column from original timestamp column
-    get_timestamp = udf(lambda x: datetime.fromtimestamp(x / 1000.0).time)
+    get_timestamp = udf(lambda x: datetime.fromtimestamp(float(x) / 1000.0).time)
     df = df.withColumn('timestamp', get_timestamp('df.ts'))
     
     # create datetime column from original timestamp column
-    get_datetime = udf(lambda x: datetime.fromtimestamp(x / 1000.0))
+    get_datetime = udf(lambda x: datetime.fromtimestamp(float(x) / 1000.0))
     df = df.withColumn('datetime', get_datetime('df.ts'))
     
     # extract columns to create time table
@@ -84,7 +84,7 @@ def process_log_data(spark, input_data, output_data):
 def main():
     spark = create_spark_session()
     input_data = "s3a://udacity-dend/"
-    output_data = ""
+    output_data = "s3a://udacity-dend/analytics/"
     
     process_song_data(spark, input_data, output_data)    
     process_log_data(spark, input_data, output_data)
@@ -92,3 +92,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
