@@ -24,7 +24,8 @@ firstName VARCHAR,
 gender VARCHAR, 
 itemInSession INT, 
 lastName VARCHAR, 
-length NUMERIC,level VARCHAR, 
+length NUMERIC,
+level VARCHAR, 
 location VARCHAR,	
 method VARCHAR,	
 page VARCHAR, 
@@ -97,7 +98,7 @@ json{};
 """).format(config['S3']['LOG_DATA'] , config['IAM_ROLE']['ARN'], config['S3']['LOG_JSONPATH'])
 
 staging_songs_copy = ("""
-copy staging_events from {}
+copy staging_songs from {}
 iam_role {}
 json'auto';
 """).format(config['S3']['SONG_DATA'] , config['IAM_ROLE']['ARN'])
@@ -156,9 +157,17 @@ EXTRACT (year from start_time) AS year, \
 EXTRACT (dayofweek from start_time) AS weekday \
 FROM songplays;""")
 
+# ANALYSIS TABLES
+songplays_table = "SELECT * FROM songplays LIMIT 5"
+users_table = "SELECT * FROM users LIMIT 5"
+songs_table = "SELECT * FROM songs LIMIT 5"
+artists_table = "SELECT * FROM artists LIMIT 5"
+time_table = "SELECT * FROM time LIMIT 5"
+
 # QUERY LISTS
 
 create_table_queries = [staging_events_table_create, staging_songs_table_create, songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
 drop_table_queries = [staging_events_table_drop, staging_songs_table_drop, songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
 copy_table_queries = [staging_events_copy, staging_songs_copy]
 insert_table_queries = [songplay_table_insert, user_table_insert, song_table_insert, artist_table_insert, time_table_insert]
+analysis_queries = [songplays_table, users_table, songs_table, artists_table, time_table]
