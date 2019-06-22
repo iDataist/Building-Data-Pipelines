@@ -49,7 +49,15 @@ time_table_insert = "INSERT INTO time (start_time, hour, day, week, month, year,
 #song ID and artist ID based on the title, artist name, and duration of a song.
 song_select = """SELECT songs.song_id, artists.artist_id  FROM songs JOIN artists ON songs.artist_id = artists.artist_id WHERE songs.title = (%s) AND artists.name = (%s) AND songs.duration = (%s)"""
 
+# ANALYSIS TABLES
+songplays_table = "SELECT * FROM songplays LIMIT 5"
+users_table = "SELECT * FROM users LIMIT 5"
+songs_table = "SELECT * FROM songs LIMIT 5"
+artists_table = "SELECT * FROM artists LIMIT 5"
+time_table = "SELECT * FROM time LIMIT 5"
+
 # QUERY LISTS
 
 create_table_queries = [songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
 drop_table_queries = [songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
+analysis_queries = [songplays_table, users_table, songs_table, artists_table, time_table]
