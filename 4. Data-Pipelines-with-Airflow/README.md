@@ -1,8 +1,19 @@
 # Data Pipelines with Airflow
 
-## The Purpose of Creating the sparkifydb Database
+## The Purpose of Building a Data Pipeline with Airflow
 
-Sparkify, a startup company with a music streaming app, would like to analyze the data they've been collecting on songs and user activity on their new music streaming app. The analytics team is particularly interested in understanding what songs users are listening to. Currently, they don't have an easy way to query their data, which resides in a directory of JSON logs on user activity on the app, as well as a directory with JSON metadata on the songs in their app. They want to create a Postgres database with tables designed to optimize queries on song play analysis.
+Sparkify, a startup company with a music streaming app, has decided that it is time to introduce more automation and monitoring to their data warehouse ETL pipelines and come to the conclusion that the best tool to achieve this is Apache Airflow. They would like to create
+high grade data pipelines that are dynamic and built from reusable tasks, can be monitored, and allow easy backfills. They have also noted that the data quality plays a big part when analyses are executed on top the data warehouse and want to run tests against their datasets after the ETL steps have been executed to catch any discrepancies in the datasets.
+
+The source data resides in S3 and needs to be processed in Sparkify's data warehouse in Amazon Redshift. The source datasets consist of CSV logs that tell about user activity in the application and JSON metadata about the songs the users listen to.
+
+## Datasets
+
+There are two datasets that reside in S3. Here are the S3 links for each:
+
+Song data: s3://udacity-dend/song_data
+
+Log data: s3://udacity-dend/log_data
 
 ## Schema for Song Play Analysis
 
@@ -25,14 +36,8 @@ Sparkify, a startup company with a music streaming app, would like to analyze th
 
 ## ETL Pipeline
 
-1. [test.ipynb](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/test.ipynb) displays the first few rows of each table to check the database.
+1. [etl.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/etl.py) reads data from S3, processes that data using Spark, and writes them back to S3.
 
-2. [create_tables.py](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/create_tables.py) drops and creates the tables, which needs to be run before the ETL scripts to reset the tables.
+2. dl.cfg contains the AWS credentials.
 
-3. [etl.ipynb](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/etl.ipynb) reads and processes a single file from song_data and log_data and loads the data into the tables.
-
-4. [etl.py](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/etl.py) reads and processes files from song_data and log_data and loads them into the tables.
-
-5. [sql_queries.py](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/sql_queries.py) contains all the sql queries, and is imported into the last three files above.
-
-6. [README.md](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/README.md) provides documentation on the project.
+3. [README.md](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/README.md) provides documentation on the project.
