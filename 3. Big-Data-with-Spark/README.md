@@ -57,8 +57,10 @@ And below is an example of what the data in a log file, 2018-11-12-events.json, 
 
 ## ETL Pipeline
 
-1. [etl.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/etl.py) reads data from S3, processes that data using Spark, and writes them back to S3.
+1. [etl_test.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/etl_test.py) reads data from local machine, processes that data using Spark, and writes them back to local machine.
 
-2. dl.cfg contains the AWS credentials.
+2. [etl.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/etl.py) reads data from S3, processes that data using Spark, and writes them back to S3.
 
-3. [README.md](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/README.md) provides documentation on the project.
+3. dl.cfg contains the AWS credentials.
+
+4. [README.md](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/README.md) provides documentation on the project.
