@@ -1,4 +1,4 @@
-# Data Pipelines with Airflow
+# Sparkify
 
 ## The Purpose of Building a Data Pipeline with Airflow
 
