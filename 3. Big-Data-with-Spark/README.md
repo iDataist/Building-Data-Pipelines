@@ -57,7 +57,7 @@ And below is an example of what the data in a log file, 2018-11-12-events.json, 
 
 ## ETL Pipeline
 
-1. [etl_test.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/etl_test.py) reads data from local machine, processes that data using Spark, and writes them back to local machine.
+1. [etl_test.py](https://github.com/iDataist/Music-Streaming-App-Data-Engineering/blob/master/3.%20Big-Data-with-Spark/etl_test.py) reads data from local machine, processes that data using Spark, and writes them back to local machine.
 
 2. [etl.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/etl.py) reads data from S3, processes that data using Spark, and writes them back to S3.
 
