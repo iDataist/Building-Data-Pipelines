@@ -35,6 +35,9 @@ Log data: s3://udacity-dend/log_data
  - *start_time, hour, day, week, month, year, weekday*
 
 ## ETL Pipeline
+create your own custom operators to perform tasks such as staging the data, filling the data warehouse, and running checks on the data as the final step.
+
+![DAG](example-dag.png)
 
 1. [etl.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/etl.py) reads data from S3, processes that data using Spark, and writes them back to S3.
 
