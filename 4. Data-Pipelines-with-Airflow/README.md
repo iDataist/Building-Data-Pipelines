@@ -36,7 +36,7 @@ Log data: s3://udacity-dend/log_data
 
 ## Data Pipeline
 
-### 1. [The DAG](https://github.com/iDataist/Music-Streaming-App-Data-Engineering/tree/master/4.%20Data-Pipelines-with-Airflow/airflow/dags)
+### 1. The [DAG](https://github.com/iDataist/Music-Streaming-App-Data-Engineering/tree/master/4.%20Data-Pipelines-with-Airflow/airflow/dags)
 - The DAG does not have dependencies on past runs
 - On failure, the task are retried 3 times
 - Retries happen every 5 minutes
