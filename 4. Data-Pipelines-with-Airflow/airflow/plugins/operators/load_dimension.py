@@ -24,12 +24,12 @@ class LoadDimensionOperator(BaseOperator):
         redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
         self.log.info('Loading dimention table %s' % self.table_name)
         if self.append_data == True:
-            sql_statement = 'INSERT INTO %s %s' %(self.table_name, self.sql_statement)
+            sql_statement = 'INSERT INTO %s %s' % (self.table_name, self.sql_statement)
             redshift.run(sql_statement)
         else:
             sql_statement = 'DELETE FROM %s' % self.table_name
             redshift.run(sql_statement)
-            sql_statement = 'INSERT INTO %s %s' %(self.table_name, self.sql_statement)
+            sql_statement = 'INSERT INTO %s %s' % (self.table_name, self.sql_statement)
             redshift.run(sql_statement)
 
         self.log.info('Loading dimention table %s completed' % self.table_name)          

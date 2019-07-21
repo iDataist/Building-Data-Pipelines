@@ -32,6 +32,6 @@ class DataQualityOperator(BaseOperator):
                 error_count += 1
                 failing_tests.append(sql)
         if error_count > 0:
-            self.log.info('Tests failed')
+            self.log.info('Result is not as expected')
             raise ValueError('Data quality check did not pass')
         self.log.info('Data quality check passed')
