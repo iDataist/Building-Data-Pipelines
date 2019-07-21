@@ -36,7 +36,7 @@ Log data: s3://udacity-dend/log_data
 
 ## Data Pipeline
 
-### 1. The DAG
+### 1. [The DAG](https://github.com/iDataist/Music-Streaming-App-Data-Engineering/tree/master/4.%20Data-Pipelines-with-Airflow/airflow/dags)
 - The DAG does not have dependencies on past runs
 - On failure, the task are retried 3 times
 - Retries happen every 5 minutes
@@ -45,9 +45,9 @@ Log data: s3://udacity-dend/log_data
 - The graph below shows task dependencies
 ![DAG](example-dag.png)
 
-### 2. The SQL helpers to run data transformations
+### 2. The SQL [helpers](https://github.com/iDataist/Music-Streaming-App-Data-Engineering/tree/master/4.%20Data-Pipelines-with-Airflow/airflow/plugins/helpers) to run data transformations
 
-### 3. The operators to perform tasks such as staging the data, filling the data warehouse, and running checks on the data
+### 3. The [operators](https://github.com/iDataist/Music-Streaming-App-Data-Engineering/tree/master/4.%20Data-Pipelines-with-Airflow/airflow/plugins/operators) to perform tasks such as staging the data, filling the data warehouse, and running checks on the data
 
 - **Stage Operator:**
 The stage operator loads any JSON and CSV formatted files from S3 to Amazon Redshift. The operator creates and runs a SQL COPY statement based on the parameters provided. The operator's parameters specify where in S3 the file is loaded and what is the target table. Parameters are used to distinguish between JSON and CSV file. The stage operator contains a templated field that allows it to load timestamped files from S3 based on the execution time and run backfills.
@@ -58,4 +58,4 @@ The dimension and fact operators utilize the SQL helper class to run data transf
 - **Data Quality Operator:**
 The data quality operator is used to run checks on the data itself. The operator's main functionality is to receive one or more SQL based test cases along with the expected results and execute the tests. For each of the test, the test result and expected result are checked. If there is no match, the operator raises an exception and the task retries and fails eventually.
 
-### 4. [README.md](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/README.md) provides documentation on the project.
+### 4. [README.md](https://github.com/iDataist/Music-Streaming-App-Data-Engineering/blob/master/4.%20Data-Pipelines-with-Airflow/README.md) provides documentation on the project.
