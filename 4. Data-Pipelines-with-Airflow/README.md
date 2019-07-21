@@ -34,13 +34,32 @@ Log data: s3://udacity-dend/log_data
 **5. time** - timestamps of records in songplays broken down into specific units
  - *start_time, hour, day, week, month, year, weekday*
 
-## ETL Pipeline
-create your own custom operators to perform tasks such as staging the data, filling the data warehouse, and running checks on the data as the final step.
+## Data Pipeline
 
+### 1. Configuring the DAG
+- The DAG does not have dependencies on past runs
+- On failure, the task are retried 3 times
+- Retries happen every 5 minutes
+- Catchup is turned off
+- Do not email on retry
+- The graph below shows task dependencies
 ![DAG](example-dag.png)
 
-1. [etl.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/etl.py) reads data from S3, processes that data using Spark, and writes them back to S3.
+### 2. Building the operators to perform tasks such as staging the data, filling the data warehouse, and running checks on the data
 
-2. dl.cfg contains the AWS credentials.
+- Stage Operator
+The stage operator loads any JSON and CSV formatted files from S3 to Amazon Redshift. The operator creates and runs a SQL COPY statement based on the parameters provided. The operator's parameters specify where in S3 the file is loaded and what is the target table.
 
-3. [README.md](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/README.md) provides documentation on the project.
+The parameters are used to distinguish between JSON and CSV file. The stage operator contains a templated field that allows it to load timestamped files from S3 based on the execution time and run backfills.
+
+- Fact and Dimension Operators
+The dimension and fact operators utilize the SQL helper class to run data transformations. The operators take as input a SQL statement and target database on which to run the query against.
+
+Dimension loads are often done with the truncate-insert pattern where the target table is emptied before the load. Thus, there is a parameter that allows switching between insert modes when loading dimensions. Fact tables are usually so massive that they only allow append type functionality.
+
+- Data Quality Operator
+The data quality operator is used to run checks on the data itself. The operator's main functionality is to receive one or more SQL based test cases along with the expected results and execute the tests. For each of the test, the test result and expected result are checked. If there is no match, the operator raises an exception and the task retries and fails eventually.
+
+### 3. Helpers
+
+### 4. [README.md](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/README.md) provides documentation on the project.
