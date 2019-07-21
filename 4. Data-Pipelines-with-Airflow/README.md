@@ -36,7 +36,7 @@ Log data: s3://udacity-dend/log_data
 
 ## Data Pipeline
 
-### 1. Configuring the DAG
+### 1. The DAG
 - The DAG does not have dependencies on past runs
 - On failure, the task are retried 3 times
 - Retries happen every 5 minutes
@@ -45,7 +45,9 @@ Log data: s3://udacity-dend/log_data
 - The graph below shows task dependencies
 ![DAG](example-dag.png)
 
-### 2. Building the operators to perform tasks such as staging the data, filling the data warehouse, and running checks on the data
+### 2. The SQL Helpers to run data transformations
+
+### 3. The operators to perform tasks such as staging the data, filling the data warehouse, and running checks on the data
 
 - Stage Operator
 The stage operator loads any JSON and CSV formatted files from S3 to Amazon Redshift. The operator creates and runs a SQL COPY statement based on the parameters provided. The operator's parameters specify where in S3 the file is loaded and what is the target table.
@@ -59,7 +61,5 @@ Dimension loads are often done with the truncate-insert pattern where the target
 
 - Data Quality Operator
 The data quality operator is used to run checks on the data itself. The operator's main functionality is to receive one or more SQL based test cases along with the expected results and execute the tests. For each of the test, the test result and expected result are checked. If there is no match, the operator raises an exception and the task retries and fails eventually.
-
-### 3. Helpers
 
 ### 4. [README.md](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/README.md) provides documentation on the project.
