@@ -11,7 +11,7 @@ class LoadDimensionOperator(BaseOperator):
                  redshift_conn_id='', 
                  table_name ='', 
                  sql_statement = '', 
-                 append_data = False
+                 append_data = False,
                  *args, **kwargs):
 
         super(LoadDimensionOperator, self).__init__(*args, **kwargs)
