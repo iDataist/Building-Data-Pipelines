@@ -1,3 +1,4 @@
+from airflow.contrib.hooks.aws_hook import AwsHook
 from airflow.hooks.postgres_hook import PostgresHook
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
@@ -16,7 +17,7 @@ class StageToRedshiftOperator(BaseOperator):
                  headers = 1, 
                  quote_char = '',
                  file_type = 'csv', 
-                 aws_credentials = {}, 
+                 aws_credentials_id = '', 
                  *args, **kwargs):
 
         super(StageToRedshiftOperator, self).__init__(*args, **kwargs)
@@ -28,11 +29,14 @@ class StageToRedshiftOperator(BaseOperator):
         self.headers = headers
         self.quote_char = quote_char
         self.file_type = file_type
-        self.aws_credentials = aws_credentials
+        self.aws_credentials_id = aws_credentials
 
     def execute(self, context):
-        self.log.info('Emptying stage table %s' % self.table_name)
+        aws_hook = AwsHook(self.aws_credentials_id)
+        credentials = aws_hook.get_credentials()        
         redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
+        
+        self.log.info('Emptying stage table %s' % self.table_name)
         redshift.run('DELETE FROM %s' % self.table_name)
         
         s3_path = 's3://%s/%s' % (self.s3_bucket, self.s3_key)
@@ -42,7 +46,7 @@ class StageToRedshiftOperator(BaseOperator):
                     FROM '%s'
                     access_key_id '%s'
                     secret_access_key '%s'
-                    """ % (self.table_name, s3_path, self.aws_credentials.get('key'), self.aws_credentials.get('secret'))
+                    """ % (self.table_name, s3_path, credentials.access_key, credentials.secret_key)
         
         if self.file_type == 'csv': 
             file_statement = """
@@ -57,7 +61,3 @@ class StageToRedshiftOperator(BaseOperator):
         self.log.info('Copying data from S3 to Redshift')
         redshift.run(full_copy_statement)
         self.log.info('Staging completed')
-
-
-
-
