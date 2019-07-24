@@ -29,7 +29,7 @@ class StageToRedshiftOperator(BaseOperator):
         self.headers = headers
         self.quote_char = quote_char
         self.file_type = file_type
-        self.aws_credentials_id = aws_credentials
+        self.aws_credentials_id = aws_credentials_id
 
     def execute(self, context):
         aws_hook = AwsHook(self.aws_credentials_id)
@@ -61,3 +61,4 @@ class StageToRedshiftOperator(BaseOperator):
         self.log.info('Copying data from S3 to Redshift')
         redshift.run(full_copy_statement)
         self.log.info('Staging completed')
+
