@@ -36,7 +36,7 @@ stage_events_to_redshift = StageToRedshiftOperator(
     headers = '1', 
     quote_char = '"', 
     file_type = 'csv', 
-    aws_credentials = 'aws_credentials'
+    aws_credentials_id = 'aws_credentials'
 )
 
 stage_songs_to_redshift = StageToRedshiftOperator(
@@ -50,7 +50,7 @@ stage_songs_to_redshift = StageToRedshiftOperator(
     headers = '1', 
     quote_char = '"', 
     file_type = 'json', 
-    aws_credentials = 'aws_credentials'
+    aws_credentials_id = 'aws_credentials'
 )
 
 load_songplays_table = LoadFactOperator(
