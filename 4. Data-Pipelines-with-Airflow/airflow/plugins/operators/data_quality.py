@@ -17,7 +17,7 @@ class DataQualityOperator(BaseOperator):
         self.dq_checks = dq_checks
 
     def execute(self, context):
-        redshift_hook = PostgresHook(self.redshift_conn_id)
+        redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
         error_count = 0
         failing_tests = []
         
@@ -26,8 +26,7 @@ class DataQualityOperator(BaseOperator):
         for check in self.dq_checks:
             sql = check.get('check_sql')
             exp_result = check.get('expected_result')
-            records = redshift.get_records(sql)[0]
-            
+            records = redshift.get_records(sql)[0]          
             if exp_result != records[0]:
                 error_count += 1
                 failing_tests.append(sql)
