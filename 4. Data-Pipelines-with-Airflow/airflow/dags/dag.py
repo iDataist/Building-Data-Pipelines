@@ -2,8 +2,10 @@ from datetime import datetime, timedelta
 import os
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
-from airflow.operators import (StageToRedshiftOperator, LoadFactOperator,
-                                LoadDimensionOperator, DataQualityOperator)
+from airflow.operators import (StageToRedshiftOperator, 
+                               LoadFactOperator,
+                               LoadDimensionOperator, 
+                               DataQualityOperator)
 from helpers import SqlQueries
 
 default_args = {
@@ -17,7 +19,7 @@ default_args = {
     'email_on_failure': False
 }
 
-dag = DAG('udac_example_dag',
+dag = DAG('music_app',
           default_args=default_args,
           description='Load and transform data in Redshift with Airflow',
           schedule_interval='@monthly'
@@ -28,24 +30,24 @@ start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 stage_events_to_redshift = StageToRedshiftOperator(
     task_id='Stage_events',
     dag=dag, 
-    table='staging_events',
+    table_name='staging_events',
     redshift_conn_id='redshift',
-    s3_bucket='udac-stg-bucket',
-    s3_key='log_data/{0}-events.csv'.format('{{ds}}'), 
+    s3_bucket='udacity-dend',
+    s3_key='log_data', 
     delimiter = ',', 
     headers = '1', 
     quote_char = '"', 
-    file_type = 'csv', 
+    file_type = 'json', 
     aws_credentials_id = 'aws_credentials'
 )
 
 stage_songs_to_redshift = StageToRedshiftOperator(
     task_id='Stage_songs',
     dag=dag, 
-    table='staging_songs',
+    table_name='staging_songs',
     redshift_conn_id='redshift',
-    s3_bucket='udac-stg-bucket',
-    s3_key='song_data/', 
+    s3_bucket='udacity-dend',
+    s3_key='song_data', 
     delimiter = ',', 
     headers = '1', 
     quote_char = '"', 
@@ -102,17 +104,17 @@ run_quality_checks= DataQualityOperator(
     dag=dag, 
     redshift_conn_id='redshift',
     dq_checks = [
-        {'check_sql': "SELECT COUNT(*) FROM users WHERE userid is null", 'expected_result': 0}, 
-        {'check_sql': "SELECT COUNT(*) FROM songs WHERE songid is null", 'expected_result': 0}
+        {'check_sql': "SELECT COUNT(*) FROM users WHERE user_id is null", 'expected_result': 0}, 
+        {'check_sql': "SELECT COUNT(*) FROM songs WHERE song_id is null", 'expected_result': 0}
     ]   
 )
 
 end_operator = DummyOperator(task_id='Stop_execution',  dag=dag)
 
-start_operator >> stage_events_to_redshift >> load_songplays_table
-start_operator >> stage_songs_to_redshift >> load_songplays_table
+start_operator >>  stage_events_to_redshift >> load_songplays_table
+start_operator >>  stage_songs_to_redshift >>  load_songplays_table
 load_songplays_table >> load_user_dimension_table >> run_quality_checks
 load_songplays_table >> load_song_dimension_table >> run_quality_checks
-load_songplays_table >> load_artist_dimension_table
-load_songplays_table >> load_time_dimension_table
+load_songplays_table >> load_artist_dimension_table >> run_quality_checks
+load_songplays_table >> load_time_dimension_table >> run_quality_checks
 run_quality_checks >> end_operator
