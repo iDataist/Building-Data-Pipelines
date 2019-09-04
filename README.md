@@ -1,43 +1,9 @@
-# Sparkify
+# Music Streaming App Data Engineering
 
-## The Purpose of Building a Data Pipeline with Airflow
+A fictitious startup called Sparkify wanted to analyze the data they collected on songs and user activity on their new music streaming app. The analysis team was particularly interested in understanding what songs users listened to. There was no easy way to query the data to generate the results, since the data resided in a directory of JSON logs on user activity on the app, as well as a directory with JSON metadata on the songs in their app. I created a database and ETL pipeline in both Postgres and Apache Cassandra, designed to optimize queries for understanding what songs users are listening to. 
 
-Sparkify, a fictitious startup company with a music streaming app, has decided that it is time to introduce more automation and monitoring to their data warehouse ETL pipelines and come to the conclusion that the best tool to achieve this is Apache Airflow. They would like to create
-high grade data pipelines that are dynamic and built from reusable tasks, can be monitored, and allow easy backfills. They have also noted that the data quality plays a big part when analyses are executed on top the data warehouse and want to run tests against their datasets after the ETL steps have been executed to catch any discrepancies in the datasets.
+The company grew their user base and song database,  and wanted to move the data warehouse onto the cloud. I built an ELT pipeline that extracts their data from S3, stages them in Redshift, and transforms them into a set of dimensional tables for their analytics team. 
 
-The source data resides in S3 and needs to be processed in Sparkify's data warehouse in Amazon Redshift. The source datasets consist of CSV logs that tell about user activity in the application and JSON metadata about the songs the users listen to.
+The company grew their user base and song database even more and wanted to move their data warehouse to a data lake. I built an ELT pipeline that loaded data from S3, processed them into analytics tables using Spark, and load them back into S3. 
 
-## Datasets
-
-There are two datasets that reside in S3. Here are the S3 links for each:
-
-Song data: s3://udacity-dend/song_data
-
-Log data: s3://udacity-dend/log_data
-
-## Schema for Song Play Analysis
-
-### **Fact Table**
-**1. songplays** - records in log data associated with song plays i.e. records with page NextSong
- - songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent
-
-### **Dimension Tables**
-**2. users** - users in the app
- - *user_id, first_name, last_name, gender, level*
-
-**3. songs** - songs in music database
- - *song_id, title, artist_id, year, duration*
-
-**4. artists** - artists in music database
- - *artist_id, name, location, lattitude, longitude*
-
-**5. time** - timestamps of records in songplays broken down into specific units
- - *start_time, hour, day, week, month, year, weekday*
-
-## ETL Pipeline
-
-1. [etl.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/etl.py) reads data from S3, processes that data using Spark, and writes them back to S3.
-
-2. dl.cfg contains the AWS credentials.
-
-3. [README.md](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/README.md) provides documentation on the project.
+The company decided to introduce more automation and monitoring to their data warehouse ETL pipelines and came to the conclusion that the best tool to achieve this was Apache Airflow. I created and automated a set of data pipelines. I configured and scheduled data pipelines with Airflow, and then monitored and debugged the production pipelines.
