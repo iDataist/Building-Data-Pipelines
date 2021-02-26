@@ -29,12 +29,12 @@ Sparkify, a startup company with a music streaming app, would like to analyze th
 
 2. [test.ipynb](https://github.com/iDataist/Build-ETL-Pipelines/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Postgres/test.ipynb) displays the first few rows of each table to check the database.
 
-3. [create_tables.py](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/create_tables.py) drops and creates the tables, which needs to be run before the ETL scripts to reset the tables.
+3. [create_tables.py](https://github.com/iDataist/Build-ETL-Pipelines/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Postgres/create_tables.py) drops and creates the tables, which needs to be run before the ETL scripts to reset the tables.
 
-4. [etl.ipynb](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/etl.ipynb) reads and processes a single file from song_data and log_data and loads the data into the tables.
+4. [etl.ipynb](https://github.com/iDataist/Build-ETL-Pipelines/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Postgres/etl.ipynb) reads and processes a single file from song_data and log_data and loads the data into the tables.
 
-5. [etl.py](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/etl.py) reads and processes files from song_data and log_data and loads them into the tables.
+5. [etl.py](https://github.com/iDataist/Build-ETL-Pipelines/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Postgres/etl.py) reads and processes files from song_data and log_data and loads them into the tables.
 
-6. [sql_queries.py](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/sql_queries.py) contains all the sql queries, and is imported into the last three files above.
+6. [sql_queries.py](https://github.com/iDataist/Build-ETL-Pipelines/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Postgres/sql_queries.py) contains all the sql queries, and is imported into the last three files above.
 
-7. [README.md](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/README.md) provides documentation on the project.
+7. [README.md](https://github.com/iDataist/Build-ETL-Pipelines/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Postgres/README.md) provides documentation on the project.
