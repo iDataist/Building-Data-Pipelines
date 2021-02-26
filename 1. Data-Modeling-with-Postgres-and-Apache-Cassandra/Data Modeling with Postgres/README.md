@@ -25,9 +25,9 @@ Sparkify, a startup company with a music streaming app, would like to analyze th
 
 ## ETL Pipeline
 
-1. [data](https://github.com/iDataist/Data-Engineering/tree/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Postgres/data) contains song_data and log_data. 
+1. [data](https://github.com/iDataist/Build-ETL-Pipelines/tree/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Postgres/data) contains song_data and log_data.
 
-2. [test.ipynb](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/test.ipynb) displays the first few rows of each table to check the database.
+2. [test.ipynb](https://github.com/iDataist/Build-ETL-Pipelines/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Postgres/test.ipynb) displays the first few rows of each table to check the database.
 
 3. [create_tables.py](https://github.com/iDataist/Data-Modeling-with-Postgres/blob/master/create_tables.py) drops and creates the tables, which needs to be run before the ETL scripts to reset the tables.
 
