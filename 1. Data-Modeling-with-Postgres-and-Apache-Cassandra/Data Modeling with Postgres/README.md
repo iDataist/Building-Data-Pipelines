@@ -37,4 +37,3 @@ Sparkify, a startup company with a music streaming app, would like to analyze th
 
 6. [sql_queries.py](https://github.com/iDataist/Build-ETL-Pipelines/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Postgres/sql_queries.py) contains all the sql queries, and is imported into the last three files above.
 
-7. [README.md](https://github.com/iDataist/Build-ETL-Pipelines/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Postgres/README.md) provides documentation on the project.
