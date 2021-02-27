@@ -65,4 +65,4 @@ And below is an example of what the data in a log file, 2018-11-12-events.json, 
 
 3. [sql_queries.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/sql_queries.py) contains all the sql queries, and is imported into the two files above.
 
-4. [README.md](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/README.md) provides documentation on the project.
+
