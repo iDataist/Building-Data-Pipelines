@@ -21,4 +21,4 @@ Sparkify, a startup company with a music streaming app, would like to analyze th
 
 3. [event_datafile_new.csv](https://github.com/iDataist/Data-Engineering/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Apache%20Cassandra/event_datafile_new.csv) contains the denormalized dataset processed from all the CSV files in the event_data
 
-4. [README.md](https://github.com/iDataist/Data-Engineering/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Apache%20Cassandra/README.md) provides documentation on the project
+
