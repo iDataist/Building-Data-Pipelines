@@ -58,4 +58,3 @@ The dimension and fact operators utilize the SQL helper class to run data transf
 - **Data Quality Operator:**
 The data quality operator is used to run checks on the data itself. The operator's main functionality is to receive one or more SQL based test cases along with the expected results and execute the tests. For each of the test, the test result and expected result are checked. If there is no match, the operator raises an exception and the task retries and fails eventually.
 
-### 4. [README.md](https://github.com/iDataist/Music-Streaming-App-Data-Engineering/blob/master/4.%20Data-Pipelines-with-Airflow/README.md) to provide documentation on the project
