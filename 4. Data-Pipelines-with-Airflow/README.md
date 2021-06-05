@@ -32,7 +32,7 @@ There are two datasets that reside in S3.
 
 ## Data Pipeline
 
-### 1. The [DAG](https://github.com/iDataist/Music-Streaming-App-Data-Engineering/tree/master/4.%20Data-Pipelines-with-Airflow/airflow/dags)
+### 1. The `DAG`
 - The DAG does not have dependencies on past runs
 - On failure, the task are retried 3 times
 - Retries happen every 5 minutes
@@ -41,9 +41,9 @@ There are two datasets that reside in S3.
 - The graph below shows task dependencies
 ![DAG](example-dag.png)
 
-### 2. The SQL [helpers](https://github.com/iDataist/Music-Streaming-App-Data-Engineering/tree/master/4.%20Data-Pipelines-with-Airflow/airflow/plugins/helpers) to run data transformations
+### 2. The `SQL helpers` to run data transformations
 
-### 3. The [operators](https://github.com/iDataist/Music-Streaming-App-Data-Engineering/tree/master/4.%20Data-Pipelines-with-Airflow/airflow/plugins/operators) to perform tasks such as staging the data, filling the data warehouse, and running checks on the data
+### 3. The `operators` to perform tasks such as staging the data, filling the data warehouse, and running checks on the data
 
 - **Stage Operator:**
 The stage operator loads any JSON and CSV formatted files from S3 to Amazon Redshift. The operator creates and runs a SQL COPY statement based on the parameters provided. The operator's parameters specify where in S3 the file is loaded and what is the target table. Parameters are used to distinguish between JSON and CSV file. The stage operator contains a templated field that allows it to load timestamped files from S3 based on the execution time and run backfills.
