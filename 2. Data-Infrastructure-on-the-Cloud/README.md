@@ -53,10 +53,10 @@ And below is an example of what the data in a log file, 2018-11-12-events.json, 
 
 ## ETL Pipeline
 
-1. [create_tables.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/create_tables.py) drops and creates the tables, which needs to be run before the ETL scripts to reset the tables.
+1. `create_tables.py` drops and creates the tables, which needs to be run before the ETL scripts to reset the tables.
 
-2. [etl.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/etl.py) loads the data from S3 to staging tables on Redshift and execute SQL statements that create the analytics tables from these staging tables.
+2. `etl.py` loads the data from S3 to staging tables on Redshift and execute SQL statements that create the analytics tables from these staging tables.
 
-3. [sql_queries.py](https://github.com/iDataist/Data-Engineering/blob/master/2.%20Data-Infrastructure-on-the-Cloud/sql_queries.py) contains all the sql queries, and is imported into the two files above.
+3. `sql_queries.py` contains all the sql queries, and is imported into the two files above.
 
 
