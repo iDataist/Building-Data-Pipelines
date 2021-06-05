@@ -6,13 +6,7 @@ Sparkify, a startup company with a music streaming app, has grown their user bas
 
 ## Datasets
 
-There are two datasets that reside in S3. Here are the S3 links for each:
-
-Song data: s3://udacity-dend/song_data
-
-Log data: s3://udacity-dend/log_data
-
-Log data json path: s3://udacity-dend/log_json_path.json
+There are two datasets that reside in S3. 
 
 ### 1. Song Dataset
 The song dataset is a subset of real data from the Million Song Dataset. Each file in the song dataset is in JSON format and contains metadata about a song and the artist of that song. The files are partitioned by the first three letters of each song's track ID. For example, here are filepaths to two files in this dataset.
