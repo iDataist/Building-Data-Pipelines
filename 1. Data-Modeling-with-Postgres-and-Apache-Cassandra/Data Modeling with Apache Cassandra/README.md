@@ -5,9 +5,9 @@ Sparkify, a startup company with a music streaming app, would like to analyze th
 
 ## ETL Pipeline
 
-1. [event_data](https://github.com/iDataist/Data-Engineering/tree/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Apache%20Cassandra/event_data) contains the CSV files of user activity on the app
+1. `event_data` contains the CSV files of user activity on the app
 
-2. [etl.ipynb](https://github.com/iDataist/Data-Engineering/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Apache%20Cassandra/etl.ipynb)
+2. `etl.ipynb`
 
   - Displays the first few rows of the CSV file in event_data to check the data
 
@@ -19,6 +19,6 @@ Sparkify, a startup company with a music streaming app, would like to analyze th
 
   - Loads the data from event_datafile_new.csv into tables and run queries
 
-3. [event_datafile_new.csv](https://github.com/iDataist/Data-Engineering/blob/master/1.%20Data-Modeling-with-Postgres-and-Apache-Cassandra/Data%20Modeling%20with%20Apache%20Cassandra/event_datafile_new.csv) contains the denormalized dataset processed from all the CSV files in the event_data
+3. `event_datafile_new.csv` contains the denormalized dataset processed from all the CSV files in the event_data
 
 
