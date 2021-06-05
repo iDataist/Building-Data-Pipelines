@@ -9,11 +9,7 @@ The source data resides in S3 and needs to be processed in Sparkify's data wareh
 
 ## Datasets
 
-There are two datasets that reside in S3. Here are the S3 links for each:
-
-Song data: s3://udacity-dend/song_data
-
-Log data: s3://udacity-dend/log_data
+There are two datasets that reside in S3. 
 
 ## Schema for Song Play Analysis
 
